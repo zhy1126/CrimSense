@@ -19,6 +19,7 @@ venv/
 build/
 dist/
 # External inputs and generated runs
+data/*.json
 data/external/
 data/tokenizer/
 outputs/
@@ -33,7 +34,7 @@ results/
 *.lock
 *.zip
 *.tar*
-# Fresh registrations are machine-specific; paper evidence lives in data/paper.
+# Local experiment metadata
 **/registration.json
 **/status.json
 **/preflight.json

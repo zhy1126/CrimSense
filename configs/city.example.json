@@ -11,7 +11,6 @@
     "config": "../data/external/chicago/config.json",
     "observed": "../data/external/chicago/observed.json",
     "domain": "../data/external/chicago/domain.json",
-    "patterns": "../data/moral_patterns.json",
-    "excluded_actors": "../data/prior_actor_exclusions.json"
+    "patterns": "../data/external/isrd4/moral_patterns.json"
   }
 }

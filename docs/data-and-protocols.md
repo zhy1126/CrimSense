@@ -13,10 +13,10 @@
 | `actors` | 1,000 focal source rows: `agent_id`, `residence`, `gender`, `race` |
 | `police` | 500 source rows: `agent_id`, `residence` |
 | `config` | The reviewed EPR configuration, either its `epr_model` mapping or full source configuration |
-| `observed` | Nonnegative integer crime counts keyed by CBG; required for RQ1 |
-| `domain` | Fixed list of CBG identifiers for spatial evaluation; required for RQ1 |
-| `patterns` | Four-item response-pattern counts; included in `data/moral_patterns.json` |
-| `excluded_actors` | Optional list of source actor IDs excluded before RQ2 cohort sampling |
+| `observed` | Nonnegative integer crime counts keyed by CBG; required for city-level spatial validation |
+| `domain` | Fixed list of CBG identifiers for city-level spatial validation |
+| `patterns` | Locally supplied four-item response-pattern counts; see [Data access](../data/README.md) |
+| `excluded_actors` | Optional local list of source actor IDs excluded before person–environment cohort sampling; omitted by default |
 
 Missing ACS estimates remain null. Preserve leading zeros in Los Angeles identifiers. Its movement map contains 1,998 CBGs, while its fixed evaluation domain contains 1,997. Do not infer the evaluation domain from positive-count areas. Chicago's domain contains 1,152 CBGs and Dallas's 612.
 
@@ -26,9 +26,9 @@ The reconstruction retains the original experiments' EPSG:32616 distance calcula
 
 ## Profiles and decisions
 
-Four moral-response items (`prosoc3`, `prosoc5`, `prosoc7`, `prosoc8`) retain response categories 1–4. Mean responses below 2 map to high propensity; means from 2 up to 3 map to medium; means of at least 3 map to low. Synthetic profiles are sampled from aggregate pattern frequencies; the repository contains no survey respondent identifiers.
+Four moral-response items (`prosoc3`, `prosoc5`, `prosoc7`, `prosoc8`) retain response categories 1–4. Mean responses below 2 map to high propensity; means from 2 up to 3 map to medium; means of at least 3 map to low. Synthetic profiles are sampled from locally supplied aggregate pattern frequencies. ISRD4 data and derived frequencies are not distributed with this release; see [Data access](../data/README.md).
 
-RQ1 uses source profiles without questionnaire assignment. RQ2 varies moral profiles and safety/police inputs: low `(0.2, 0)`, medium `(0.5, 1)`, high `(0.8, 2)`. Each cohort uses the same actor identities across methods and conditions. RQ3 fixes profiles across policy branches and world runs.
+City-level spatial validation uses source profiles without questionnaire assignment. Person–environment experiments vary moral profiles and safety/police inputs: low `(0.2, 0)`, medium `(0.5, 1)`, high `(0.8, 2)`. Each cohort uses the same actor identities across methods and conditions. Intervention experiments fix profiles across policy branches and world runs.
 
 Perception returns an allowed action set. Guardianship is assessed separately and cannot read the perception result; in intervention runs it also excludes the personal profile. Commitment receives the retained alternatives and validated guardianship score. Target selection occurs only after commitment and can select only a retained, co-located target. No-target steps bypass the model. The three ablations remove the action filter, replace guardianship with the controlled safety score, or merge commitment and target selection. The merged variant exposes target information earlier and is not a pure comparison of stage count.
 
@@ -49,9 +49,9 @@ No-intervention and intervention runs also retain the baseline witness/reporting
 
 Let N be all focal actor-steps, Q eligible opportunities, K opportunities retaining crime, and C validated crime choices. The reported rates are `100*C/N`, `100*C/Q`, `100*K/Q`, and `100*C/K`. Undefined zero-denominator rates remain null.
 
-RQ2 uses opportunity rates. It reports the signed environmental contrast `ΔE(p) = r(p, high) − r(p, low)`, interaction `I = ΔE(high) − ΔE(low)`, and the reduction-oriented manuscript contrast `D = −I`. Actor bootstrap weights are shared across methods and all P/E conditions within a city/cohort. Equal-city summaries average city-specific rates and contrasts. Cohorts are not independent world repetitions.
+Person–environment analysis uses opportunity rates. It reports the signed environmental contrast `ΔE(p) = r(p, high) − r(p, low)`, interaction `I = ΔE(high) − ΔE(low)`, and the reduction-oriented manuscript contrast `D = −I`. Actor bootstrap weights are shared across methods and all P/E conditions within a city/cohort. Equal-city summaries average city-specific rates and contrasts. Cohorts are not independent world repetitions.
 
-RQ3 compares post-intervention counts/rates with control within each world and averages those paired differences across runs within a city. Adjacent areas share a polygon boundary with selected areas; selected, adjacent, and rest-of-city counts sum to the citywide count. Standard deviations use `ddof=1`; one-run SDs are null.
+Intervention analysis compares post-intervention counts/rates with control within each world and averages those paired differences across runs within a city. Adjacent areas share a polygon boundary with selected areas; selected, adjacent, and rest-of-city counts sum to the citywide count. Standard deviations use `ddof=1`; one-run SDs are null.
 
 Spatial evaluation retains full-domain base-2 JSD, normalized-share RMSE, and HR@1/1.5/2. The legacy best-30% comparison is reported separately with its original natural-log square-root expression; it is not the full-domain JSD.
 

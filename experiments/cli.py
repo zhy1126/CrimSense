@@ -1,4 +1,4 @@
-"""One entry point for the three research questions and their analyses."""
+"""Run city-level validation, person–environment experiments, and policy evaluation."""
 
 import argparse
 from pathlib import Path
@@ -14,8 +14,13 @@ from analysis.behavior import pe_summary, policy_summary
 def main(argv=None):
     parser = argparse.ArgumentParser(description="CrimSense experiments and analysis")
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ("city", "pe", "interventions"):
-        p = sub.add_parser(name)
+    descriptions = {
+        "city": "Evaluate simulated city-level crime distributions",
+        "pe": "Compare person–environment responses and decision-stage ablations",
+        "interventions": "Evaluate behavioral and spatial effects of crime-prevention policies",
+    }
+    for name, description in descriptions.items():
+        p = sub.add_parser(name, help=description, description=description)
         p.add_argument("--inputs", required=True)
         p.add_argument("--output", required=True, help="New output directory")
         p.add_argument(
@@ -87,7 +92,9 @@ def main(argv=None):
             "Paper inputs require 1,000 focal agents, 4,000 residents and 500 police"
         )
     if args.command == "city" and (inputs.observed is None or inputs.domain is None):
-        parser.error("RQ1 requires observed crime counts and a fixed evaluation domain")
+        parser.error(
+            "City-level validation requires observed crime counts and a fixed evaluation domain"
+        )
     with Client(context_check=ContextLimit(args.tokenizer)) as client:
         if args.command == "city":
             run_city(
