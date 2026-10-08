@@ -24,7 +24,6 @@ class Inputs:
             "actors",
             "police",
             "config",
-            "patterns",
         }
         if not required <= self.paths.keys():
             raise ValueError(
@@ -43,7 +42,7 @@ class Inputs:
             data["actors"],
             data["police"],
         )
-        self.config, self.patterns = data["config"], data["patterns"]
+        self.config, self.patterns = data["config"], data.get("patterns")
         self.observed, self.domain = data.get("observed"), data.get("domain")
         self.excluded = set(data.get("excluded_actors", []))
 

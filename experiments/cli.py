@@ -76,6 +76,7 @@ def main(argv=None):
             policy_summary(
                 args.run,
                 geometries={k: v["shapely_lnglat"] for k, v in inputs.map.aois.items()},
+                city=inputs.city,
             ),
         )
         return

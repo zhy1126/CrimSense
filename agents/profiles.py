@@ -32,6 +32,10 @@ LEVELS = PROPENSITY_LEVELS = ("low", "medium", "high")
 
 def assign_three(data, ids, seed=42):
     """Map observed moral-answer patterns to three propensity bands."""
+    if data is None:
+        raise ValueError(
+            "Supply authorized local moral-response counts through the patterns input"
+        )
     if len(ids) != len(set(ids)) or not ids:
         raise ValueError("Unique nonempty actor IDs required")
     pools = {p: [] for p in PROPENSITY_LEVELS}

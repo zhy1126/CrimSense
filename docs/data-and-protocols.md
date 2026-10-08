@@ -15,7 +15,7 @@
 | `config` | The reviewed EPR configuration, either its `epr_model` mapping or full source configuration |
 | `observed` | Nonnegative integer crime counts keyed by CBG; required for city-level spatial validation |
 | `domain` | Fixed list of CBG identifiers for city-level spatial validation |
-| `patterns` | Locally supplied four-item response-pattern counts; see [Data access](../data/README.md) |
+| `patterns` | Local four-item response-pattern counts; required for person–environment and intervention simulations, optional for spatial validation and summaries; see [Data access](../data/README.md) |
 | `excluded_actors` | Optional local list of source actor IDs excluded before person–environment cohort sampling; omitted by default |
 
 Missing ACS estimates remain null. Preserve leading zeros in Los Angeles identifiers. Its movement map contains 1,998 CBGs, while its fixed evaluation domain contains 1,997. Do not infer the evaluation domain from positive-count areas. Chicago's domain contains 1,152 CBGs and Dallas's 612.

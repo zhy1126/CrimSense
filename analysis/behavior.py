@@ -210,12 +210,14 @@ def mean_sd(values):
     )
 
 
-def policy_summary(output, *, geometries, activation=25, window=5):
+def policy_summary(output, *, geometries, city=None, activation=25, window=5):
     root = Path(output)
     reg = read(root / "experiment.json")
     cfg = reg["config"]
     if cfg["experiment"] != "interventions":
         raise ValueError("Expected an intervention run")
+    if city is not None and city != reg["city"]:
+        raise ValueError("Input city does not match the intervention run")
     if cfg.get("parameters"):
         activation = cfg["parameters"].get("activation_step", activation)
     runs = []
@@ -248,6 +250,8 @@ def policy_summary(output, *, geometries, activation=25, window=5):
                     raise ValueError("Incomplete policy actor-step records")
                 if any(r["step"] != step for r in rows):
                     raise ValueError("Policy step mismatch")
+                if any(r["location"] not in geometries for r in rows):
+                    raise ValueError("Missing geometry for a recorded location")
                 records.extend(rows)
             post = [r for r in records if r["step"] >= activation]
             cbg_counts = Counter(r["location"] for r in post if r["crime"])
@@ -266,6 +270,8 @@ def policy_summary(output, *, geometries, activation=25, window=5):
                     for start in range(0, cfg["steps"], window)
                 ],
             )
+            if branches[arm]["zones"]["citywide"] != branches[arm]["rates"]["C"]:
+                raise ValueError("Citywide spatial count differs from the crime total")
         control = branches["control"]
         for arm, b in branches.items():
             b["reduction_pp"] = (
