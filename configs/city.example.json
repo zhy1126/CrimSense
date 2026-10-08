@@ -1,0 +1,17 @@
+{
+  "city": "chicago",
+  "upstream": "../data/external/crimemind/upstream",
+  "files": {
+    "environments": "../data/external/chicago/environments.json",
+    "pois": "../data/external/chicago/pois.json",
+    "geometries": "../data/external/chicago/geometries.json",
+    "residents": "../data/external/chicago/residents.json",
+    "actors": "../data/external/chicago/actors.json",
+    "police": "../data/external/chicago/police.json",
+    "config": "../data/external/chicago/config.json",
+    "observed": "../data/external/chicago/observed.json",
+    "domain": "../data/external/chicago/domain.json",
+    "patterns": "../data/moral_patterns.json",
+    "excluded_actors": "../data/prior_actor_exclusions.json"
+  }
+}

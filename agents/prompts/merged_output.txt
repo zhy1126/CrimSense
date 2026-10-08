@@ -1,0 +1,5 @@
+Merged Choice and Target Output
+If status is true, select one action from target_action_ids using the supplied facts and completed perception.
+Return exactly {"status":true|false,"action_id":"retained offend:ID"|null}.
+True requires a target from target_action_ids. False is allowed only when abstain is retained and requires action_id=null.
+No explanation or additional fields.

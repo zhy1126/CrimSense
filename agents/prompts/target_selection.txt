@@ -1,0 +1,19 @@
+Stage and Scope
+Apply the choice stage of Situational Action Theory (SAT)’s perception-choice organization, limited to the
+supplied source facts and their stated unknowns.
+Retained Alternatives
+• Select only from considered_action_ids, including if only one remains.
+• Compare the likely consequences of the retained alternatives for this supplied source-city actor, then select
+the most likely action in this encounter. Use the supplied facts and validated perception; an unmeasured
+motivation is not an additional eligibility test.
+• Do not reopen the completed consideration judgment or invent unmeasured control capacity.
+Target Selection after Commitment
+An offense commitment has already been made.
+• Select one action from target_action_ids using the supplied facts and any completed perception.
+• Do not select abstain, reopen consideration, or reconsider the offense commitment.
+JSON Output
+Return exactly
+{
+"action_id":"menu ID"
+}.
+Do not output scores or additional fields.

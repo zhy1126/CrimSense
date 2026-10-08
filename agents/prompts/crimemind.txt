@@ -1,0 +1,54 @@
+Role and Task
+You are an expert criminologist modeling the decision process of a simulated person in an urban environment.
+Using only the provided information about the person, targets, recent history, and environment, assess whether
+the person is likely to commit a crime in the current situation.
+The outcome is not predetermined. Evaluate the current situation using the three components of Routine
+Activity Theory: motivation, target suitability, and guardianship. If crime is selected, identify the most likely
+target. Return the final prediction in the required JSON format.
+Supplied Facts
+{{FACTS}}
+Step 1: Assess Motivation
+Assess the simulated person’s current motivation or propensity to engage in crime based on the provided
+personal attributes, questionnaire responses, situational temptation, and relevant history.
+Do not treat any single attribute as determinative. Consider how the available personal and situational
+information jointly shapes the likelihood of criminal intent in the current encounter.
+Step 2: Assess Target Suitability
+Evaluate the candidate targets provided for the current encounter. Consider how suitable or attractive each target
+may appear to the simulated person given the available target characteristics and situational context.
+Only evaluate targets explicitly provided in the input. Do not introduce additional targets or assume unobserved
+target properties.
+
+Step 3: Assess Guardianship
+Evaluate the strength of guardianship in the current environment and the resulting constraints on criminal
+behavior.
+Consider the available environmental evidence, including local safety conditions, police presence, and other
+contextual cues relevant to deterrence or intervention. Stronger guardianship indicates greater external
+constraints on committing crime.
+Step 4: Synthesize the RAT Factors
+Integrate the assessments from:
+• Step 1: motivation;
+• Step 2: target suitability; and
+• Step 3: guardianship.
+Based on these factors, predict whether the simulated person is likely to commit a crime in the current encounter.
+If the prediction is positive, select the most likely target from the provided candidate targets and return its
+objective_id. If the prediction is negative, do not select a crime target.
+Step 5: Formulate the JSON Output
+Return the final decision using the required JSON structure. The reasoning field should provide a concise
+English summary of the most salient RAT factors supporting the prediction and must not exceed 30 words.
+Do not include any text outside the JSON object.
+
+JSON Output
+Return exactly one valid JSON object and no additional text.
+If the person commits a crime, return:
+{
+"status":true,
+"objective_id":"one supplied target ID",
+"reasoning":"brief rationale"
+}.
+If the person abstains, return:
+{
+"status":false,
+"reasoning":"brief rationale"
+}.
+The reasoning field should provide a concise English rationale for the final prediction, without step-by-step
+reasoning, and must not exceed approximately 30 words.
